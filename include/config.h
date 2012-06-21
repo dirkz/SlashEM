@@ -5,6 +5,9 @@
 #ifndef CONFIG_H /* make sure the compiler does not see the typedefs twice */
 #define CONFIG_H
 
+#define LIGHTSABERS
+#define JEDI
+
 #undef SHORT_FILENAMES
 
 
