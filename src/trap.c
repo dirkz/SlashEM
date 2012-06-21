@@ -3118,16 +3118,6 @@ drown()
 		vision_full_recalc = 1;
 		return(FALSE);
 	}
-	else if (Swimming && !Is_waterlevel(&u.uz)) {
-		if (Punished) {
-			unplacebc();
-			placebc();
-		}
-		u.uinwater = 1;
-		under_water(1);
-		vision_full_recalc = 1;
-		return(FALSE);
-	}
 	if ((Teleportation || can_teleport(youmonst.data)) &&
 		    !u.usleep && (Teleport_control || rn2(3) < Luck+2)) {
 		You("attempt a teleport spell.");	/* utcsri!carroll */
@@ -3317,7 +3307,7 @@ struct trap *ttmp;
 	    u.umoved = TRUE;
 	    newsym(u.ux0, u.uy0);
 	    vision_recalc(1);
-	    check_leash(u.ux0, u.uy0);
+	    check_leash(&youmonst, u.ux0, u.uy0, FALSE);
 	    if (Punished) move_bc(0, bc, bx, by, cx, cy);
 	    spoteffects(FALSE);	/* dotrap() */
 	    exercise(A_WIS, FALSE);
@@ -4243,14 +4233,7 @@ lava_effects()
     burn_away_slime();
     if (likes_lava(youmonst.data)) return FALSE;
 
-
-    if (Slimed) {
-	pline("The slime boils away!");
-	Slimed = 0;
-    }
-
     if (!Fire_resistance) {
-
 	if(Wwalking) {
 	    dmg = d(6,6);
 	    pline_The("lava here burns you!");

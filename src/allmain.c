@@ -278,7 +278,7 @@ moveloop()
 			    tele();
 			    if (u.ux != old_ux || u.uy != old_uy) {
 				if (!next_to_u()) {
-				    check_leash(old_ux, old_uy);
+				    check_leash(&youmonst, old_ux, old_uy, TRUE);
 				}
 #ifdef REDO
 				/* clear doagain keystrokes */
@@ -432,9 +432,6 @@ moveloop()
 #ifdef WIZARD
 	if (iflags.sanity_check)
 	    sanity_check();
-#elif defined(OBJ_SANITY)
-	if (iflags.sanity_check)
-	    obj_sanity_check();
 #endif
 
 #ifdef CLIPPING

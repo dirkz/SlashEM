@@ -189,9 +189,7 @@ static struct Bool_Opt
 #endif
 	{"rest_on_space", &flags.rest_on_space, FALSE, SET_IN_GAME},
 	{"safe_pet", &flags.safe_dog, TRUE, SET_IN_GAME},
-#if defined(OBJ_SANITY)
-	{"sanity_check", &iflags.sanity_check, TRUE, SET_IN_GAME},
-#elif defined(WIZARD)
+#ifdef WIZARD
 	{"sanity_check", &iflags.sanity_check, FALSE, SET_IN_GAME},
 #else
 	{"sanity_check", (boolean *)0, FALSE, SET_IN_FILE},
@@ -276,6 +274,14 @@ static struct Comp_Opt
 						SET_IN_GAME },
 	{ "dogname",  "the name of your (first) dog (e.g., dogname:Fang)",
 						PL_PSIZ, DISP_IN_GAME },
+#ifdef DUMP_LOG
+	{ "dumpfile", "where to dump data (e.g., dumpfile:/tmp/dump.nh)",
+#ifdef DUMP_FN
+						PL_PSIZ, DISP_IN_GAME },
+#else
+						PL_PSIZ, SET_IN_GAME },
+#endif
+#endif
 	{ "dungeon",  "the symbols to use in drawing the dungeon map",
 						MAXDCHARS+1, SET_IN_FILE },
 	{ "effects",  "the symbols to use in drawing special effects",
@@ -1128,11 +1134,11 @@ char *str;
    int i, c = NO_COLOR, a = ATR_NONE;
    struct menucoloring *tmp;
    char *tmps, *cs = strchr(str, '=');
+   const char *err = (char *)0;
 #ifdef POSIX_REGEX
    int errnum;
    char errbuf[80];
 #endif
-   const char *err = (char *)0;
    
    if (!cs || !str) return FALSE;
    
@@ -1339,6 +1345,19 @@ boolean tinitial, tfrom_file;
 			nmcpy(dogname, op, PL_PSIZ);
 		return;
 	}
+
+#ifdef DUMP_LOG
+	fullname = "dumpfile";
+	if (match_optname(opts, fullname, 3, TRUE)) {
+#ifndef DUMP_FN
+		if (negated) bad_negation(fullname, FALSE);
+		else if ((op = string_for_opt(opts, !tfrom_file)) != 0
+			&& strlen(op) > 1)
+			nmcpy(dump_fn, op, PL_PSIZ);
+#endif
+		return;
+       }
+#endif
 
 	fullname = "horsename";
 	if (match_optname(opts, fullname, 5, TRUE)) {
@@ -2886,9 +2905,7 @@ doset()
 			 (boolopt[i].optflags == SET_IN_GAME && pass == 1))) {
 		    if (bool_p == &flags.female) continue;  /* obsolete */
 #ifdef WIZARD
-#ifndef OBJ_SANITY
 		    if (bool_p == &iflags.sanity_check && !wizard) continue;
-#endif
 		    if (bool_p == &iflags.menu_tab_sep && !wizard) continue;
 #endif
 		    if (is_wc_option(boolopt[i].name) &&
@@ -3428,6 +3445,10 @@ char *buf;
 	}
 	else if (!strcmp(optname, "dogname")) 
 		Sprintf(buf, "%s", dogname[0] ? dogname : none );
+#ifdef DUMP_LOG
+	else if (!strcmp(optname, "dumpfile"))
+		Sprintf(buf, "%s", dump_fn[0] ? dump_fn: none );
+#endif
 	else if (!strcmp(optname, "dungeon"))
 		Sprintf(buf, "%s", to_be_done);
 	else if (!strcmp(optname, "effects"))
@@ -3468,7 +3489,7 @@ char *buf;
 	else if (!strcmp(optname, "gender"))
 		Sprintf(buf, "%s", rolestring(flags.initgend, genders, adj));
 	else if (!strcmp(optname, "ghoulname")) 
-		Sprintf(buf, "%s", ghoulname[0] ? ghoulname : none );
+		Sprintf(buf, "%s", ghoulname[0] ? ghoulname : none);
 	else if (!strcmp(optname, "horsename")) 
 		Sprintf(buf, "%s", horsename[0] ? horsename : none);
 	else if (!strcmp(optname, "map_mode"))
@@ -3645,7 +3666,7 @@ char *buf;
 			iflags.wc_foregrnd_text    ? iflags.wc_foregrnd_text : defbrief,
 			iflags.wc_backgrnd_text    ? iflags.wc_backgrnd_text : defbrief);
 	else if (!strcmp(optname, "wolfname")) 
-		Sprintf(buf, "%s", wolfname[0] ? wolfname : none );
+		Sprintf(buf, "%s", wolfname[0] ? wolfname : none);
 #ifdef PREFIXES_IN_USE
 	else {
 	    for (i = 0; i < PREFIX_COUNT; ++i)
@@ -3827,9 +3848,7 @@ option_help()
     for (i = 0; boolopt[i].name; i++) {
 	if (boolopt[i].addr) {
 #ifdef WIZARD
-#ifndef OBJ_SANITY
 	    if (boolopt[i].addr == &iflags.sanity_check && !wizard) continue;
-#endif
 	    if (boolopt[i].addr == &iflags.menu_tab_sep && !wizard) continue;
 #endif
 	    next_opt(datawin, boolopt[i].name);

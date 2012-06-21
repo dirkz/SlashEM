@@ -1,7 +1,7 @@
 +------------------------------------------------------------------------+
 |                             HISTORY.TXT                                |
 +------------------------------------------------------------------------+
-|                          SLASH'EM ver 0.0.7                            |
+|                          SLASH'EM ver 0.0.8                            |
 |               Super Lotsa Added Stuff Hack - Extended Magic            |
 |                           A Nethack Variant                            |
 | Courtesy of the Slash'EM development team with the efforts and support |
@@ -29,75 +29,8 @@
 | Section 1: Yesterday's News |
 +-----------------------------+
 
-ver 0.0.7E7F2 [December 4/2005] [Released by Ali]
--fixed bug 1232707: engraving with lightsabers
--fixed bug 1237780: gtk window port fails to build with gcc-4.0
--fixed bug 1239041: engrave dialog doesn't show lightsabers
--fixed bug 1231766: Food shown in Medical Kits
--fixed bug 1238060: grammatical error when burning through a door 
-		    (Benjamin Schieder)
--fixed bug 1104713: Pet and Frozen food stores can charge
--fixed bug 988827: Monster wearing CoI left invisible corpse
--fixed bug 934078: Mold "wiggle" out of bag
--fixed bug 933587: One-Eyed Sam referred to as "it"
--fixed bug 1240794: Pets don't grow up properly
--fixed bug 1240799: Steed ridden onto poly trap polymorphs permanently
--fixed bug 1243904: chameleon as statue trap
--fixed bug 1223226: Some creatures are missing horns
--fixed bug 1223222: Female Bulls??
--fixed bug 1244470: shopkeeper don't have shotgun
--fixed bug 215062: no black color
-		   Extends videocolors option, see Guidebook for details.
--fixed bug 1244468: different spitting venom when polymorph
--fixed bug 1179557: Found egg marked (laid by you)
--fixed bug 1206099: Torches are not extinguished with rust traps
--fixed bug 1294907: 'Raise Zombies' technique cannot raise dwarf zombies! (Xeno)
--fixed bug 1355972: Monsters Don't gain Drain resistance due to worn items!
-		    (Xeno)
-
-ver 0.0.7E7F1 [July 2/2005] [Released by Ali]
--fixed bug 1155634: charm spell or command undead spell invoke genocide
--fixed incorrect #ifdef resulting in compilation failure on ANSI only DOS builds
--fixed bug 1193070: Engraving with a wand of draining keeps illiterate
-		    conduct (Nico Kist)
--fixed bug 924811: Fire vampires leave corpses
--fixed bug 1028948: casting stone to flesh on a gargoyle
--fixed bug 1213881: Lieutenants lack Firearms
--fixed bug 1212903: Int and Wis stats not correct (in obscure case)
--fixed bug 1175912: Deity-gifted pets should not attack like aligned unicorns
-		    (Nico Kist)
--fixed bug 1205563: suppress_alert still says NetHack
--fixed bug 1157414: Do not "loose" faith
--fixed bug 1197822: necromancer zombie's hp
--fixed bug 1185759: Shopkeeper "looks at corpse" through wall
-
-ver 0.0.7E7 [February 19/2005] [Released by Ali]
--Fixed build of proxy tests
--fixed bug 1071688: cannot compile on FreeBSD (termcap)
--fixed bug 1071623: Cannot compile on FreeBSD due to menucolor inclusion
--fixed bug 993420: Crashes when typing symbols on drop menu
--fixed bug 1087609: Some platforms fails to compile win/proxy/nhext.c
--fixed bug 1084366: ghoul queen don't has M2_FEMALE
--fixed bug 1066530: Fired/thrown items get new inventory letter when retrieved
--fixed bug 992244: Alt Gr key doesn't work
--fixed bug 1076125: Unsuccessful use of medical kits
--fixed bug 1076123: Vampires can eat white pills
--fixed bug 994993: when polying, you take off T-shirt after scales merge
--fixed bug 961914: Deep dragons should resist their own breath
--fixed bug 963344: Stat exercise effects calculated while polymorphed
--fixed bug 1097792: Duplicate message when hit by sleep gaze
--fixed bug 1065927: Should bars stop bullets?
--fixed bug 947009: Scroll of taming exercises skill in healing spells
--fixed bug 1077355: game crashes with: "panic monsndx - could not index monster"
--fixed bug 1098686: Restoring a mounted character wielding Sting can fail
--fixed bug 1105100: Escaping from pits by polymorphing into a mind flayer
--fixed bug 1107123: GTK Accepts any keypress as the default response to
-		    question
--fixed bug 1110081: in_container() uses obj->quan after deallocatin obj
--fixed bug 1116877: Dereferencing freed memory when applying bags which explode
--fixed bug 951483: Wands of cancellation can be held in a bag of holding
-
-ver 0.0.7E6F3 [November 13/2004] [Released by Ali]
+ver 0.0.8E0 [July 2/2005] [Released by Ali]
+-Added dumplog patch (Tom Friedetzky and Jukka Lahtinen)
 -fixed bug 923003: Invisible mirrors can be applied
 -fixed bug 916544: Wrong weight of corpses on Nightmare level
 -fixed bug 947369: Crash when multiple wands explode
@@ -160,9 +93,50 @@ ver 0.0.7E6F3 [November 13/2004] [Released by Ali]
 -fixed bug 936167: Started with empty medical kit (Pasi Kallinen)
 -fixed bug 934077: Wrote an invisible scroll (Pasi Kallinen)
 -fixed bug 1015079: Spurious "it snatches the boulder" message (Pasi Kallinen)
+-fixed bug 957731: Shop purchases free after 200 objects
 -fixed bug 1062624: GTK Interface is not resizable
 -fixed bug 931684: Inventory window behaving strangely
-
+-Fixed build of proxy tests
+-fixed bug 1071688: cannot compile on FreeBSD (termcap)
+-fixed bug 1071623: Cannot compile on FreeBSD due to menucolor inclusion
+-Unbundled proxy and gtk modules:
+	http://www.nongnu.org/nhproxy/
+	http://www.gtkhack.org/
+-fixed bug 993420: Crashes when typing symbols on drop menu
+-fixed bug 1084366: ghoul queen don't has M2_FEMALE
+-fixed bug 1066530: Fired/thrown items get new inventory letter when retrieved
+-fixed bug 992244: Alt Gr key doesn't work
+-fixed bug 1076125: Unsuccessful use of medical kits
+-fixed bug 1076123: Vampires can eat white pills
+-fixed bug 994993: when polying, you take off T-shirt after scales merge
+-fixed bug 961914: Deep dragons should resist their own breath
+-fixed bug 963344: Stat exercise effects calculated while polymorphed
+-fixed bug 1097792: Duplicate message when hit by sleep gaze
+-fixed bug 1065927: Should bars stop bullets?
+-fixed bug 947009: Scroll of taming exercises skill in healing spells
+-fixed bug 1077355: game crashes with: "panic monsndx - could not index monster"
+-fixed bug 1098686: Restoring a mounted character wielding Sting can fail
+-fixed bug 1105100: Escaping from pits by polymorphing into a mind flayer
+-Proxy: Implement get_no_glyph method for compatibility with nhproxy 0.9.1
+-fixed bug 1110081: in_container() uses obj->quan after deallocatin obj
+-fixed bug 1116877: Dereferencing freed memory when applying bags which explode
+-fixed bug 951483: Wands of cancellation can be held in a bag of holding
+-fixed bug 1155634: charm spell or command undead spell invoke genocide
+-fixed incorrect #ifdef resulting in compilation failure on ANSI only DOS builds
+-fixed bug 1193070: Engraving with a wand of draining keeps illiterate
+		    conduct (Nico Kist)
+-fixed bug 924811: Fire vampires leave corpses
+-fixed bug 1028948: casting stone to flesh on a gargoyle
+-fixed bug 1213881: Lieutenants lack Firearms
+-fixed bug 1212903: Int and Wis stats not correct (in obscure case)
+-fixed bug 1175912: Deity-gifted pets should not attack like aligned unicorns
+		    (Nico Kist)
+-fixed bug 1205563: suppress_alert still says NetHack
+-fixed bug 1157414: Do not "loose" faith
+-fixed bug 1021014: leashed pet movement bug
+-fixed bug 1197822: necromancer zombie's hp
+-fixed bug 1185759: Shopkeeper "looks at corpse" through wall
+-Experimental support for GNU autoconf
 ver 0.0.7E6F2 [May 3/2004] [Released by Ali]
 -fixed bug 910334: Vampire blood and foodless conduct
 -fixed bug 924384: Inconsistency with shoggoth corroding items

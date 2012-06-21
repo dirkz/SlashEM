@@ -171,7 +171,7 @@ struct obj *box;
 		if (!(otmp = mksobj(supplies[rn2(SIZE(supplies))], TRUE, TRUE)))
 		    continue;
 		else
-		    otmp->oinvis = FALSE;
+		    obj_set_oinvis(otmp, FALSE, FALSE);
 	    } else
 	    if (box->otyp == ICE_BOX) {
 		if (!(otmp = mksobj(CORPSE, TRUE, TRUE))) continue;
@@ -417,7 +417,6 @@ boolean artif;
 	otmp->otyp = otyp;
 	otmp->where = OBJ_FREE;
 	otmp->dknown = index(dknowns, let) ? 0 : 1;
-	otmp->oinvis = 0;
 	otmp->olocked = FALSE; /* ->recharged */
 	otmp->altmode = WP_MODE_AUTO;
 	if ((otmp->otyp >= ELVEN_SHIELD && otmp->otyp <= ORCISH_SHIELD) ||
@@ -426,8 +425,8 @@ boolean artif;
 	if (!objects[otmp->otyp].oc_uses_known)
 		otmp->known = 1;
 #ifdef INVISIBLE_OBJECTS
-	otmp->oinvis = !always_visible(otmp) && \
-		(otmp->otyp != BOULDER || !In_sokoban(&u.uz)) && !rn2(1250);
+	obj_set_oinvis(otmp, !rn2(1250) &&
+	  (otmp->otyp != BOULDER || !In_sokoban(&u.uz)), FALSE);
 #endif
 	if (init) switch (let) {
 /* -----------============STEPHEN WHITE'S NEW CODE============----------- */                   
@@ -675,14 +674,13 @@ boolean artif;
 #endif
 		}
 		break;
-/* -----------============STEPHEN WHITE'S NEW CODE============----------- */           
 	case WAND_CLASS:
 		if(otmp->otyp == WAN_WISHING) {                 
-			otmp->spe = rnd(3);
+		    otmp->spe = rnd(3);
 #ifdef INVISIBLE_OBJECTS
-			if (Is_stronghold(&u.uz)) otmp->oinvis = 1;
+		    if (Is_stronghold(&u.uz)) obj_set_oinvis(otmp, TRUE, FALSE);
 #endif
-			if(!rn2(2)) otmp->recharged = 1;
+		    if(!rn2(2)) otmp->recharged = 1;
 		} else otmp->spe = rn1(5,
 			(objects[otmp->otyp].oc_dir == NODIR) ? 15 : 8);
 		blessorcurse(otmp, 17);
@@ -1695,13 +1693,7 @@ dealloc_obj(obj)
     free((genericptr_t) obj);
 }
 
-#if defined(OBJ_SANITY) || defined(WIZARD)
-# ifdef WIZARD
-# define msgprefix	""
-# else
-# define msgprefix	"BUG (please report): "
-# endif
-
+#ifdef WIZARD
 /* Check all object lists for consistency. */
 void
 obj_sanity_check()
@@ -1715,7 +1707,7 @@ obj_sanity_check()
     mesg = "fobj sanity";
     for (obj = fobj; obj; obj = obj->nobj) {
 	if (obj->where != OBJ_FLOOR) {
-	    pline("%s%s obj %s %s@(%d,%d): %s\n", msgprefix, mesg,
+	    pline("%s obj %s %s@(%d,%d): %s\n", mesg,
 		fmt_ptr((genericptr_t)obj, obj_address),
 		where_name(obj->where),
 		obj->ox, obj->oy, doname(obj));
@@ -1728,7 +1720,7 @@ obj_sanity_check()
 	for (y = 0; y < ROWNO; y++)
 	    for (obj = level.objects[x][y]; obj; obj = obj->nexthere)
 		if (obj->where != OBJ_FLOOR) {
-		    pline("%s%s obj %s %s@(%d,%d): %s\n", msgprefix, mesg,
+		    pline("%s obj %s %s@(%d,%d): %s\n", mesg,
 			fmt_ptr((genericptr_t)obj, obj_address),
 			where_name(obj->where),
 			obj->ox, obj->oy, doname(obj));
@@ -1737,7 +1729,7 @@ obj_sanity_check()
     mesg = "invent sanity";
     for (obj = invent; obj; obj = obj->nobj) {
 	if (obj->where != OBJ_INVENT) {
-	    pline("%s%s obj %s %s: %s\n", msgprefix, mesg,
+	    pline("%s obj %s %s: %s\n", mesg,
 		fmt_ptr((genericptr_t)obj, obj_address),
 		where_name(obj->where), doname(obj));
 	}
@@ -1747,7 +1739,7 @@ obj_sanity_check()
     mesg = "migrating sanity";
     for (obj = migrating_objs; obj; obj = obj->nobj) {
 	if (obj->where != OBJ_MIGRATING) {
-	    pline("%s%s obj %s %s: %s\n", msgprefix, mesg,
+	    pline("%s obj %s %s: %s\n", mesg,
 		fmt_ptr((genericptr_t)obj, obj_address),
 		where_name(obj->where), doname(obj));
 	}
@@ -1757,7 +1749,7 @@ obj_sanity_check()
     mesg = "buried sanity";
     for (obj = level.buriedobjlist; obj; obj = obj->nobj) {
 	if (obj->where != OBJ_BURIED) {
-	    pline("%s%s obj %s %s: %s\n", msgprefix, mesg,
+	    pline("%s obj %s %s: %s\n", mesg,
 		fmt_ptr((genericptr_t)obj, obj_address),
 		where_name(obj->where), doname(obj));
 	}
@@ -1767,13 +1759,13 @@ obj_sanity_check()
     mesg = "bill sanity";
     for (obj = billobjs; obj; obj = obj->nobj) {
 	if (obj->where != OBJ_ONBILL) {
-	    pline("%s%s obj %s %s: %s\n", msgprefix, mesg,
+	    pline("%s obj %s %s: %s\n", mesg,
 		fmt_ptr((genericptr_t)obj, obj_address),
 		where_name(obj->where), doname(obj));
 	}
 	/* shouldn't be a full container on the bill */
 	if (obj->cobj) {
-	    pline("%s%s obj %s contains %s! %s\n", msgprefix, mesg,
+	    pline("%s obj %s contains %s! %s\n", mesg,
 		fmt_ptr((genericptr_t)obj, obj_address),
 		something, doname(obj));
 	}
@@ -1783,12 +1775,12 @@ obj_sanity_check()
     for (mon = fmon; mon; mon = mon->nmon)
 	for (obj = mon->minvent; obj; obj = obj->nobj) {
 	    if (obj->where != OBJ_MINVENT) {
-		pline("%s%s obj %s %s: %s\n", msgprefix, mesg,
+		pline("%s obj %s %s: %s\n", mesg,
 			fmt_ptr((genericptr_t)obj, obj_address),
 			where_name(obj->where), doname(obj));
 	    }
 	    if (obj->ocarry != mon) {
-		pline("%s%s obj %s (%s) not held by mon %s (%s)\n", msgprefix, mesg,
+		pline("%s obj %s (%s) not held by mon %s (%s)\n", mesg,
 			fmt_ptr((genericptr_t)obj, obj_address),
 			doname(obj),
 			fmt_ptr((genericptr_t)mon, mon_address),
@@ -1822,16 +1814,16 @@ check_contained(container, mesg)
 
     for (obj = container->cobj; obj; obj = obj->nobj) {
 	if (obj->where != OBJ_CONTAINED)
-	    pline("%scontained %s obj %s: %s\n", msgprefix, mesg,
+	    pline("contained %s obj %s: %s\n", mesg,
 		fmt_ptr((genericptr_t)obj, obj1_address),
 		where_name(obj->where));
 	else if (obj->ocontainer != container)
-	    pline("%s%s obj %s not in container %s\n", msgprefix, mesg,
+	    pline("%s obj %s not in container %s\n", mesg,
 		fmt_ptr((genericptr_t)obj, obj1_address),
 		fmt_ptr((genericptr_t)container, obj2_address));
     }
 }
-#endif /* OBJ_SANITY || WIZARD */
+#endif /* WIZARD */
 
 #endif /* OVL1 */
 

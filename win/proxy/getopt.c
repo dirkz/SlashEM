@@ -1,4 +1,4 @@
-/* $Id: getopt.c,v 1.4.2.1 2005/08/13 11:28:08 prousu Exp $ */
+/* $Id: getopt.c,v 1.5 2005/08/13 11:27:04 prousu Exp $ */
 /* Copyright (c) Slash'EM Development Team 2002 */
 /* NetHack may be freely redistributed.  See license for details. */
 
