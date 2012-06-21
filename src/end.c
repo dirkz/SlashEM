@@ -2,6 +2,10 @@
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+#ifdef __APPLE__
+#include "TargetConditionals.h"
+#endif
+
 #define NEED_VARARGS	/* comment line for pre-compiled headers */
 
 #include "hack.h"
@@ -397,7 +401,11 @@ boolean taken;
 			    makeknown(obj->otyp);
 			    obj->known = obj->bknown = obj->dknown = obj->rknown = 1;
 			}
+#if TARGET_OS_IPHONE
+			(void) display_inventory((char *)0, FALSE);
+#else
 			(void) display_inventory((char *)0, TRUE);
+#endif
 			container_contents(invent, TRUE, TRUE);
 		}
 		if (c == 'q')  done_stopprint++;

@@ -5,6 +5,14 @@
 #ifndef CONFIG_H /* make sure the compiler does not see the typedefs twice */
 #define CONFIG_H
 
+#ifdef __APPLE__
+#include "TargetConditionals.h"
+#endif
+
+#if TARGET_OS_IPHONE
+#define SLASHEM
+#endif
+
 #undef SHORT_FILENAMES
 
 
@@ -50,7 +58,7 @@
  * Define all of those you want supported in your binary.
  * Some combinations make no sense.  See the installation document.
  */
-#define TTY_GRAPHICS		/* good old tty based graphics */
+#define TTY_GRAPHICS 		/* good old tty based graphics */
 /* #define X11_GRAPHICS */	/* X11 interface */
 /* #define QT_GRAPHICS */	/* Qt Interface */
 /* #define KDE */		/* KDE Interface */
@@ -60,6 +68,11 @@
 /* #define MSWIN_GRAPHICS */	/* Windows NT, CE, Graphics */
 /* #define GL_GRAPHICS */	/* OpenGL graphics */
 /* #define SDL_GRAPHICS */	/* Software SDL graphics */
+
+#if TARGET_OS_IPHONE
+#undef TTY_GRAPHICS
+#define IOS_GRAPHICS
+#endif
 
 /*
  * Define the default window system.  This should be one that is compiled
@@ -188,6 +201,10 @@
 # endif
 #endif
 
+#ifdef IOS_GRAPHICS
+#define DEFAULT_WINDOW_SYS "ios"
+#endif
+
 #ifndef DEFAULT_WINDOW_SYS
 # define DEFAULT_WINDOW_SYS "tty"
 #endif
@@ -229,9 +246,11 @@
  */
 
 #ifdef UNIX
+#if !TARGET_OS_IPHONE
 /* path and file name extension for compression program */
 # define COMPRESS "/usr/bin/compress" /* Lempel-Ziv compression */
 # define COMPRESS_EXTENSION ".Z"	     /* compress's extension */
+#endif /* !TARGET_OS_IPHONE */
 
 /* An example of one alternative you might want to use: */
 /* # define COMPRESS "/usr/local/bin/gzip" */   /* FSF gzip compression */

@@ -2,6 +2,10 @@
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+#ifdef __APPLE__
+#include "TargetConditionals.h"
+#endif
+
 #include "hack.h"
 #include "dlb.h"
 
@@ -1475,6 +1479,9 @@ const char *filename;
 int whichprefix;
 int retryct;
 {
+#if TARGET_OS_IPHONE
+	return TRUE;
+#endif
 #if defined(MAC_MPW) || defined(__MWERKS__)
 # pragma unused(filename, retryct)
 #endif
@@ -1598,6 +1605,9 @@ const char *filename;
 	char locknambuf[BUFSZ];
 	const char *lockname;
 
+#if TARGET_OS_IPHONE
+	return;
+#endif
 	if (nesting == 1) {
 		lockname = make_lockname(filename, locknambuf);
 #ifndef NO_FILE_LINKS	/* LOCKDIR should be subsumed by LOCKPREFIX */

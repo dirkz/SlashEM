@@ -2,6 +2,10 @@
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+#ifdef __APPLE__
+#include "TargetConditionals.h"
+#endif
+
 #ifdef UNIX
 #ifndef UNIXCONF_H
 #define UNIXCONF_H
@@ -160,6 +164,23 @@
 # else
 # define LOCKDIR "/usr/games/lib/nethackdir"	/* where to put locks */
 # endif
+#endif
+
+#if TARGET_OS_IPHONE
+#define NO_FILE_LINKS /* if no hard links */
+#define LOCKDIR "." /* where to put locks */
+#else
+#ifdef NO_FILE_LINKS
+# ifdef FILE_AREAS
+# define LOCKDIR FILE_AREA_VAR			/* where to put locks */
+# else
+# define LOCKDIR "/usr/games/lib/nethackdir"	/* where to put locks */
+# endif
+#endif
+#endif /* TARGET_OS_IPHONE */
+
+#if TARGET_OS_IPHONE
+#define SELF_RECOVER		/* Allow the game itself to recover from an aborted game */
 #endif
 
 /*

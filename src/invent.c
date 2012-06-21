@@ -2,6 +2,10 @@
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+#ifdef __APPLE__
+#include "TargetConditionals.h"
+#endif
+
 #include "hack.h"
 
 #define NOINVSYM	'#'
@@ -1972,6 +1976,27 @@ long* out_cnt;
 	/* oxymoron? temporarily assign permanent inventory letters */
 	if (!flags.invlet_constant) reassign();
 
+#if !TARGET_OS_IPHONE /* on iPhone, always display menus even if only one item */
+	if (lets && strlen(lets) == 1) {
+	    /* when only one item of interest, use pline instead of menus;
+         we actually use a fake message-line menu in order to allow
+         the user to perform selection at the --More-- prompt for tty */
+	    ret = '\0';
+	    for (otmp = invent; otmp; otmp = otmp->nobj) {
+            if (otmp->invlet == lets[0]) {
+                ret = message_menu(lets[0],
+                                   want_reply ? PICK_ONE : PICK_NONE,
+                                   xprname(otmp, (char *)0, lets[0], TRUE, 0L, 0L));
+                if (out_cnt) *out_cnt = -1L;	/* select all */
+                break;
+            }
+	    }
+#ifdef PROXY_GRAPHICS
+	    busy--;
+#endif
+	    return ret;
+	}
+#endif /* TARGET_OS_IPHONE */
 	if (lets && strlen(lets) == 1) {
 	    /* when only one item of interest, use pline instead of menus;
 	       we actually use a fake message-line menu in order to allow
@@ -2474,6 +2499,10 @@ boolean picked_some;
 		return(!!Blind);
 	}
 	/* we know there is something here */
+
+#if TARGET_OS_IPHONE
+	skip_objects = (obj_cnt > 1);
+#endif
 
 	if (skip_objects) {
 	    if (dfeature) pline(fbuf);
