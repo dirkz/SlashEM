@@ -55,6 +55,7 @@ include/autoconf_paths.h
 /include/vis_tab.h
 /include/win32api.h
 /include/tile.h
+/include/filename.h
 
 # /src/
 /src/*.o
