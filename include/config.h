@@ -16,7 +16,7 @@
 #undef SHORT_FILENAMES
 
 
-/*#define DEBUG*/
+/*#define NH_DEBUG*/
 /*#define DDEBUG*/
 /*#define MONITOR_HEAP*/
 #if defined(MONITOR_HEAP) && (defined(UNIX) || defined(WIN32))

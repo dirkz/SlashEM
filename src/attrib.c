@@ -342,7 +342,7 @@ exercise(i, inc_or_dec)
 int	i;
 boolean	inc_or_dec;
 {
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	pline("Exercise:");
 #endif
 	if (i == A_INT || i == A_CHA) return;	/* can't exercise these */
@@ -361,7 +361,7 @@ boolean	inc_or_dec;
 		 *	Note: *YES* ACURR is the right one to use.
 		 */
 		AEXE(i) += (inc_or_dec) ? (rn2(19) > ACURR(i)) : -rn2(2);
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		pline("%s, %s AEXE = %d",
 			(i == A_STR) ? "Str" : (i == A_WIS) ? "Wis" :
 			(i == A_DEX) ? "Dex" : "Con",
@@ -391,7 +391,7 @@ exerper()
 			 (u.uhunger > 50) ? HUNGRY :
 			 (u.uhunger > 0) ? WEAK : FAINTING;
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		pline("exerper: Hunger checks");
 #endif
 		switch (hs) {
@@ -409,7 +409,7 @@ exerper()
 		}
 
 		/* Encumberance Checks */
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		pline("exerper: Encumber checks");
 #endif
 		switch (near_capacity()) {
@@ -424,7 +424,7 @@ exerper()
 
 	/* status checks */
 	if(!(moves % 5)) {
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		pline("exerper: Status checks");
 #endif
 		/* KMH, intrinsic patch */
@@ -450,13 +450,13 @@ exerchk()
 	/*	Check out the periodic accumulations */
 	exerper();
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	if(moves >= next_check)
 		pline("exerchk: ready to test. multi = %d.", multi);
 #endif
 	/*	Are we ready for a test?	*/
 	if(moves >= next_check && !multi) {
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	    pline("exerchk: testing.");
 #endif
 	    /*
@@ -478,7 +478,7 @@ exerchk()
 		if(ABASE(i) >= 18 || !AEXE(i)) continue;
 		if(i == A_INT || i == A_CHA) continue;/* can't exercise these */
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		pline("exerchk: testing %s (%d).",
 			(i == A_STR) ? "Str" : (i == A_WIS) ? "Wis" :
 			(i == A_DEX) ? "Dex" : "Con", AEXE(i));
@@ -493,11 +493,11 @@ exerchk()
 		    continue;
 		mod_val = sgn(AEXE(i));
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		pline("exerchk: changing %d.", i);
 #endif
 		if(adjattrib(i, mod_val, -1)) {
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		    pline("exerchk: changed %d.", i);
 #endif
 		    /* if you actually changed an attrib - zero accumulation */
@@ -524,7 +524,7 @@ exerchk()
 		}
 	    }
 	    next_check += rn1(2000,2000);
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	    pline("exerchk: next check at %ld.", next_check);
 #endif
 	}

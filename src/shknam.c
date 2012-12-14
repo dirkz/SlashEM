@@ -430,7 +430,7 @@ struct mkroom	*sroom;
 	else if(sy == sroom->ly-1) sy++;
 	else if(sy == sroom->hy+1) sy--; else {
 	shk_failed:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 # ifdef WIZARD
 	    /* Said to happen sometimes, but I have never seen it. */
 	    /* Supposedly fixed by fdoor change in mklev.c */

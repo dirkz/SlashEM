@@ -1457,7 +1457,7 @@ dopay()
 	}
 
 	if(!shkp) {
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		pline("dopay: null shkp.");
 #endif
 		return(0);
@@ -5506,7 +5506,7 @@ check_lower:
 
 #endif /* OVLB */
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 int
 wiz_debug_cmd()	/* in this case, display your bill(s) */
 {

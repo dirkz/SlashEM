@@ -623,7 +623,7 @@ struct attack *uattk;
 			mhit &= ~HIT_UWEP;
 
 		if (tmp1 > dice(UWEP_ROLL)) exercise(A_DEX, TRUE);
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		pline("(%i/20)", tmp1);
 #endif
 	}
@@ -637,7 +637,7 @@ struct attack *uattk;
 			mhit &= ~HIT_USWAPWEP;
 
 		if (tmp2 > dice(USWAPWEP_ROLL)) exercise(A_DEX, TRUE);
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		pline("((%i/20))", tmp2);
 #endif
 	}
@@ -2741,7 +2741,7 @@ use_weapon:
 			dhit = mhit; /* Clear the miss counter as attacks miss */
 			tmp1 = tmp2 = tmp;
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 			pline("%i/20", tmp);
 #endif
 
@@ -2753,7 +2753,7 @@ use_weapon:
 				dhit &= ~HIT_UWEP; /* missed */
 				
 			    if (tmp1 > dice(UWEP_ROLL)) exercise(A_DEX, TRUE);
-#ifdef DEBUG
+#ifdef NH_DEBUG
 			    pline("(%i/20)", tmp1);
 #endif
 			}
@@ -2770,7 +2770,7 @@ use_weapon:
 
 			    if (tmp2 > dice(USWAPWEP_ROLL))
 				exercise(A_DEX, TRUE);
-#ifdef DEBUG
+#ifdef NH_DEBUG
 			    pline("((%i/20))", tmp2);
 #endif
 			}

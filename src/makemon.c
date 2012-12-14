@@ -1432,7 +1432,7 @@ register int	mmflags;
 		struct monst fakemon;
 		do {
 			if(!(ptr = rndmonst())) {
-#ifdef DEBUG
+#ifdef NH_DEBUG
 			    pline("Warning: no monster.");
 #endif
 			    return((struct monst *) 0);	/* no more monsters! */
@@ -1850,7 +1850,7 @@ rndmonst()
 	    }		
 	    if (mndx == SPECIAL_PM) {
 		/* evidently they've all been exterminated */
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		pline("rndmonst: no common mons!");
 #endif
 		return (struct permonst *)0;
@@ -1896,7 +1896,7 @@ loopback:
 
 	if (rndmonst_state.choice_count <= 0) {
 	    /* maybe no common mons left, or all are too weak or too strong */
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	    Norep("rndmonst: choice_count=%d", rndmonst_state.choice_count);
 #endif
 	    return (struct permonst *)0;

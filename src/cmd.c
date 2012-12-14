@@ -16,7 +16,7 @@
 
 #define CMD_TRAVEL (char)0x90
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 /*
  * only one "wiz_debug_cmd" routine should be available (in whatever
  * module you are trying to debug) or things are going to get rather
@@ -407,7 +407,7 @@ extcmd_via_menu()	/* here after # - now show pick-list of possible commands */
 				biggest = strlen(efp->ef_desc);
 				Sprintf(fmtstr,"%%-%ds", biggest + 15);
 			}
-#ifdef DEBUG
+#ifdef NH_DEBUG
 			if (i >= MAX_EXT_CMD - 2) {
 			    impossible("Exceeded %d extended commands in doextcmd() menu",
 					MAX_EXT_CMD - 2);
@@ -471,7 +471,7 @@ extcmd_via_menu()	/* here after # - now show pick-list of possible commands */
 	    if (n==1) {
 		if (matchlevel > (QBUFSZ - 2)) {
 			free((genericptr_t)pick_list);
-#ifdef DEBUG
+#ifdef NH_DEBUG
 			impossible("Too many characters (%d) entered in extcmd_via_menu()",
 				matchlevel);
 #endif
@@ -1789,7 +1789,7 @@ static const struct menu_tab wizard_menu[] = {
 	{'T', TRUE, wiz_timeout_queue, "look at timeout queue"},
 	{'V', TRUE, wiz_show_vision, "show vision array"},
 	{'W', TRUE, wiz_show_wmodes, "show wall modes"},
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	{'&', TRUE, wiz_debug_cmd, "wizard debug command"},
 #endif
 	{0,0,0,0,0},
@@ -2284,7 +2284,7 @@ struct ext_func_tab extcmdlist[] = {
         {(char *)0, (char *)0, donull, TRUE},
 	{(char *)0, (char *)0, donull, TRUE},
 	{(char *)0, (char *)0, donull, TRUE},
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	{(char *)0, (char *)0, donull, TRUE},
 #endif
 	{(char *)0, (char *)0, donull, TRUE},
@@ -2312,7 +2312,7 @@ static const struct ext_func_tab debug_extcmdlist[] = {
 	{"stats", "show memory statistics", wiz_show_stats, TRUE},
 	{"timeout", "look at timeout queue", wiz_timeout_queue, TRUE},
 	{"vision", "show vision array", wiz_show_vision, TRUE},
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	{"wizdebug", "wizard debug command", wiz_debug_cmd, TRUE},
 #endif
 	{"wmode", "show wall modes", wiz_show_wmodes, TRUE},

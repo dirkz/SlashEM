@@ -903,7 +903,7 @@ init_dungeons()
 	       so that it's hidden from <ctrl/O> feedback. */
 	}
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	dumpit();
 #endif
 }
@@ -1132,7 +1132,7 @@ u_on_sstairs() {	/* place you on the special staircase */
 	    /* code stolen from goto_level */
 	    int trycnt = 0;
 	    xchar x, y;
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	    pline("u_on_sstairs: picking random spot");
 #endif
 #define badspot(x,y) ((levl[x][y].typ != ROOM && levl[x][y].typ != CORR) || MON_AT(x, y))

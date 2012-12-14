@@ -11,7 +11,7 @@
 
 /* #define DEBUG */	/* uncomment to enable debugging */
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 # ifdef WIZARD
 #define debugpline      if (wizard) pline
 # else
@@ -83,7 +83,7 @@ int x, y;
 		if ((is_demon(mtmp->data) || is_undead(mtmp->data)) ?
 		    otmp->blessed : otmp->cursed)
 	{
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		debugpline("%s thinks %s at (%d,%d) is `cursed'",
 		  noit_Monnam(mtmp), doname(otmp), x, y);
 #endif
@@ -229,7 +229,7 @@ boolean devour;
 			else
 			    obj = addinv(obj); /* unlikely but a merge is possible */			
 		    }
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		    debugpline("split object,");
 #endif
 		}
@@ -585,7 +585,7 @@ int after, udist, whappr;
 	return appr;
 }
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 #define CHECK_ALLOW(flag,str)	if ((allowflags & (flag)) == (flag)) { \
 				    allowflags ^= (flag); \
 				    if (bp != buf) { *bp++=','; *bp++=' '; } \
@@ -731,7 +731,7 @@ register int after;	/* this is extra fast monster movement */
 
 	appr = dog_goal(mtmp, (has_edog && !is_spell) ? edog : (struct edog *)0,
 							after, udist, whappr);
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	{
 	    char *goal;
 	    switch(gtyp)
@@ -802,7 +802,7 @@ register int after;	/* this is extra fast monster movement */
 	if (is_giant(mtmp->data)) allowflags |= BUSTDOOR;
 	if (tunnels(mtmp->data)) allowflags |= ALLOW_DIG;
 	cnt = mfndpos(mtmp, poss, info, allowflags);
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	debugpline("%d positions found with allow: %s", cnt,
 	  allow_set(allowflags));
 	for (i = 0; i < cnt; i++) {

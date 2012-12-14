@@ -681,7 +681,7 @@ register const char *s;
 	    int x_range = x_maze_max - x_maze_min - 2*INVPOS_X_MARGIN - 1,
 		y_range = y_maze_max - y_maze_min - 2*INVPOS_Y_MARGIN - 1;
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	    if (x_range <= INVPOS_X_MARGIN || y_range <= INVPOS_Y_MARGIN ||
 		   (x_range * y_range) <= (INVPOS_DISTANCE * INVPOS_DISTANCE))
 		panic("inv_pos: maze is too small! (%d x %d)",
@@ -973,7 +973,7 @@ register xchar x, y, todnum, todlevel;
 		impossible("portal on top of portal??");
 		return;
 	}
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	pline("mkportal: at (%d,%d), to %s, level %d",
 		x, y, dungeons[todnum].dname, todlevel);
 #endif

@@ -22,7 +22,7 @@ int
 rn2(x)		/* 0 <= rn2(x) < x */
 register int x;
 {
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	if (x <= 0) {
 		impossible("rn2(%d) attempted", x);
 		return(0);
@@ -43,7 +43,7 @@ register int x;	/* good luck approaches 0, bad luck approaches (x-1) */
 {
 	register int i;
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	if (x <= 0) {
 		impossible("rnl(%d) attempted", x);
 		return(0);
@@ -67,7 +67,7 @@ int
 rnd(x)		/* 1 <= rnd(x) <= x */
 register int x;
 {
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	if (x <= 0) {
 		impossible("rnd(%d) attempted", x);
 		return(1);
@@ -88,7 +88,7 @@ register int n, x;
 {
 	register int tmp = n;
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	if (x < 0 || n < 0 || (x == 0 && n != 0)) {
 		impossible("d(%d,%d) attempted", n, x);
 		return(1);

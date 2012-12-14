@@ -2259,7 +2259,7 @@ blitz_spirit_bomb()
 	return 1;
 }
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 void
 wiz_debug_cmd() /* in this case, allow controlled loss of techniques */
 {

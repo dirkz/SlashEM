@@ -545,7 +545,7 @@ register struct obj *spellbook;
 		}
 		end_delay = 0;  /* Changed if multi != 0 */
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		pline("Delay: %i", delay);
 #endif
 		if (multi) {
@@ -560,7 +560,7 @@ register struct obj *spellbook;
 			}
 			if ((--multi) > (-delay)) end_delay = multi + delay;
 			multi = 0;
-#ifdef DEBUG
+#ifdef NH_DEBUG
 			pline("end_delay: %i", end_delay);
 #endif
 		}

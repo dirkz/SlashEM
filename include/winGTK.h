@@ -10,7 +10,7 @@
 
 #ifndef WIN32
 #define WINGTK_X11		/* X11 libraries are available for our use */
-#ifdef DEBUG
+#ifdef NH_DEBUG
 #define MONITOR_XRESOURCES	/* Debugging */
 #endif
 #endif

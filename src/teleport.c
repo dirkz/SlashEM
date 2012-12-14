@@ -138,7 +138,7 @@ unsigned entflags;
     struct monst fakemon;	/* dummy monster */
 
     if (!mdat) {
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	pline("enexto() called with mdat==0");
 #endif
 	/* default to player's original monster type */
@@ -217,7 +217,7 @@ full:
 #define EPATHTO_Y(xy)		((xy) / COLNO - 1)
 #define EPATHTO_X(xy)		((xy) % COLNO)
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 coord epathto_debug_cc[100];
 #endif
 
@@ -292,7 +292,7 @@ struct permonst *mdat;
     }
     if (nd > nc)
 	nd = nc;
-#ifdef DEBUG
+#ifdef NH_DEBUG
     if (cc == epathto_debug_cc)
     {
 	winid win;
@@ -392,7 +392,7 @@ genericptr_t data;
     free((genericptr_t)map);
 }
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 void
 wiz_debug_cmd() /* in this case, run epathto on arbitary monster & goal */
 {

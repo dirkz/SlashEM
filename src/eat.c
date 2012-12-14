@@ -5,7 +5,7 @@
 #include "hack.h"
 /* #define DEBUG */	/* uncomment to enable new eat code debugging */
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 # ifdef WIZARD
 #define debugpline	if (wizard) pline
 # else
@@ -318,13 +318,13 @@ recalc_wt()
 {
 	struct obj *piece = victual.piece;
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	debugpline("Old weight = %d", piece->owt);
 	debugpline("Used time = %d, Req'd time = %d",
 		victual.usedtime, victual.reqtime);
 #endif
 	piece->owt = weight(piece);
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	debugpline("New weight = %d", piece->owt);
 #endif
 }
@@ -336,7 +336,7 @@ reset_eat()		/* called when eating interrupted by an event */
      * the round is spent eating.
      */
 	if(victual.eating && !victual.doreset) {
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	    debugpline("reset_eat...");
 #endif
 	    victual.doreset = TRUE;
@@ -354,7 +354,7 @@ register struct obj *otmp;
 	    else
 		otmp = splitobj(otmp, 1L);
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	    debugpline("split object,");
 #endif
 	}
@@ -414,7 +414,7 @@ struct obj *old_obj, *new_obj;
 STATIC_OVL void
 do_reset_eat()
 {
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	debugpline("do_reset_eat...");
 #endif
 	if (victual.piece) {
@@ -651,7 +651,7 @@ register struct permonst *ptr;
 {
 	switch (type) {
 	    case FIRE_RES:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		if (ptr->mconveys & MR_FIRE) {
 			debugpline("can get fire resistance");
 			return(TRUE);
@@ -660,7 +660,7 @@ register struct permonst *ptr;
 		return(ptr->mconveys & MR_FIRE);
 #endif
 	    case SLEEP_RES:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		if (ptr->mconveys & MR_SLEEP) {
 			debugpline("can get sleep resistance");
 			return(TRUE);
@@ -669,7 +669,7 @@ register struct permonst *ptr;
 		return(ptr->mconveys & MR_SLEEP);
 #endif
 	    case COLD_RES:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		if (ptr->mconveys & MR_COLD) {
 			debugpline("can get cold resistance");
 			return(TRUE);
@@ -678,7 +678,7 @@ register struct permonst *ptr;
 		return(ptr->mconveys & MR_COLD);
 #endif
 	    case DISINT_RES:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		if (ptr->mconveys & MR_DISINT) {
 			debugpline("can get disintegration resistance");
 			return(TRUE);
@@ -687,7 +687,7 @@ register struct permonst *ptr;
 		return(ptr->mconveys & MR_DISINT);
 #endif
 	    case SHOCK_RES:	/* shock (electricity) resistance */
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		if (ptr->mconveys & MR_ELEC) {
 			debugpline("can get shock resistance");
 			return(TRUE);
@@ -696,7 +696,7 @@ register struct permonst *ptr;
 		return(ptr->mconveys & MR_ELEC);
 #endif
 	    case POISON_RES:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		if (ptr->mconveys & MR_POISON) {
 			debugpline("can get poison resistance");
 			return(TRUE);
@@ -705,7 +705,7 @@ register struct permonst *ptr;
 		return(ptr->mconveys & MR_POISON);
 #endif
 	    case TELEPORT:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		if (can_teleport(ptr)) {
 			debugpline("can get teleport");
 			return(TRUE);
@@ -714,7 +714,7 @@ register struct permonst *ptr;
 		return(can_teleport(ptr));
 #endif
 	    case TELEPORT_CONTROL:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		if (control_teleport(ptr)) {
 			debugpline("can get teleport control");
 			return(TRUE);
@@ -723,7 +723,7 @@ register struct permonst *ptr;
 		return(control_teleport(ptr));
 #endif
 	    case TELEPAT:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		if (telepathic(ptr)) {
 			debugpline("can get telepathy");
 			return(TRUE);
@@ -776,7 +776,7 @@ register struct permonst *ptr;
 {
 	register int chance;
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	debugpline("Attempting to give intrinsic %d", type);
 #endif
 	/* some intrinsics are easier to get than others */
@@ -807,7 +807,7 @@ register struct permonst *ptr;
 
 	switch (type) {
 	    case FIRE_RES:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		debugpline("Trying to give fire resistance");
 #endif
 		if(!(HFire_resistance & FROMOUTSIDE)) {
@@ -817,7 +817,7 @@ register struct permonst *ptr;
 		}
 		break;
 	    case SLEEP_RES:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		debugpline("Trying to give sleep resistance");
 #endif
 		if(!(HSleep_resistance & FROMOUTSIDE)) {
@@ -826,7 +826,7 @@ register struct permonst *ptr;
 		}
 		break;
 	    case COLD_RES:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		debugpline("Trying to give cold resistance");
 #endif
 		if(!(HCold_resistance & FROMOUTSIDE)) {
@@ -835,7 +835,7 @@ register struct permonst *ptr;
 		}
 		break;
 	    case DISINT_RES:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		debugpline("Trying to give disintegration resistance");
 #endif
 		if(!(HDisint_resistance & FROMOUTSIDE)) {
@@ -846,7 +846,7 @@ register struct permonst *ptr;
 		}
 		break;
 	    case SHOCK_RES:	/* shock (electricity) resistance */
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		debugpline("Trying to give shock resistance");
 #endif
 		if(!(HShock_resistance & FROMOUTSIDE)) {
@@ -858,7 +858,7 @@ register struct permonst *ptr;
 		}
 		break;
 	    case POISON_RES:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		debugpline("Trying to give poison resistance");
 #endif
 		if(!(HPoison_resistance & FROMOUTSIDE)) {
@@ -868,7 +868,7 @@ register struct permonst *ptr;
 		}
 		break;
 	    case TELEPORT:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		debugpline("Trying to give teleport");
 #endif
 		if(!(HTeleportation & FROMOUTSIDE)) {
@@ -878,7 +878,7 @@ register struct permonst *ptr;
 		}
 		break;
 	    case TELEPORT_CONTROL:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		debugpline("Trying to give teleport control");
 #endif
 		if(!(HTeleport_control & FROMOUTSIDE)) {
@@ -889,7 +889,7 @@ register struct permonst *ptr;
 		}
 		break;
 	    case TELEPAT:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		debugpline("Trying to give telepathy");
 #endif
 		if(!(HTelepat & FROMOUTSIDE)) {
@@ -902,7 +902,7 @@ register struct permonst *ptr;
 		}
 		break;
 	    default:
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		debugpline("Tried to give an impossible intrinsic");
 #endif
 		break;
@@ -1162,7 +1162,7 @@ register int pm;
 				 * for the first one
 				 */
 				if (!rn2(count)) {
-#ifdef DEBUG
+#ifdef NH_DEBUG
 					debugpline("Intrinsic %d replacing %d",
 								i, tmp);
 #endif
@@ -1636,7 +1636,7 @@ STATIC_OVL void
 start_eating(otmp)		/* called as you start to eat */
 	register struct obj *otmp;
 {
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	debugpline("start_eating: %lx (victual = %lx)", otmp, victual.piece);
 	debugpline("reqtime = %d", victual.reqtime);
 	debugpline("(original reqtime = %d)", objects[otmp->otyp].oc_delay);
@@ -2571,7 +2571,7 @@ doeat()		/* generic "eat" command funtion (see cmd.c) */
 	    basenutrit -= drainlevel(otmp);
 	}
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	debugpline("before rounddiv: victual.reqtime == %d", victual.reqtime);
 	debugpline("oeaten == %d, basenutrit == %d", otmp->oeaten, basenutrit);
 	debugpline("nutrit == %d, cnutrit == %d", nutrit, otmp->otyp == CORPSE ?
@@ -2579,7 +2579,7 @@ doeat()		/* generic "eat" command funtion (see cmd.c) */
 #endif
 	victual.reqtime = (basenutrit == 0 ? 0 :
 		rounddiv(victual.reqtime * (long)nutrit, basenutrit));
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	debugpline("after rounddiv: victual.reqtime == %d", victual.reqtime);
 #endif
 	/* calculate the modulo value (nutrit. units per round eating)
@@ -2688,7 +2688,7 @@ register int num;
 {
 	/* See comments in newuhs() for discussion on force_save_hs */
 	boolean iseating = occupation == eatfood || force_save_hs;
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	debugpline("lesshungry(%d)", num);
 #endif
 	u.uhunger += num;

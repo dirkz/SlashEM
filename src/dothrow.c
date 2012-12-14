@@ -1523,7 +1523,7 @@ int thrown;
 		   by WEAPON_SKILLS once ammo objects have been excluded */
 		tmp += weapon_hit_bonus(obj);
 	    }
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	    pline("(%i/20)", tmp);
 #endif
 

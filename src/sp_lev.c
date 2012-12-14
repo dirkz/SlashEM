@@ -11,9 +11,9 @@
 
 #include "hack.h"
 #include "dlb.h"
-/* #define DEBUG */	/* uncomment to enable code debugging */
+/* #define NH_DEBUG */	/* uncomment to enable code debugging */
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 # ifdef WIZARD
 #define debugpline	if (wizard) pline
 # else
@@ -398,7 +398,7 @@ chk:
 		lev = &levl[x][y];
 		for (; y <= ymax; y++) {
 			if (lev++->typ) {
-#ifdef DEBUG
+#ifdef NH_DEBUG
 				if(!vault)
 				    debugpline("strange area [%d,%d] in check_room.",x,y);
 #endif
@@ -474,7 +474,7 @@ xchar	rtype, rlit;
 			r1 = rnd_rect(); /* Get a random rectangle */
 
 			if (!r1) { /* No more free rectangles ! */
-#ifdef DEBUG
+#ifdef NH_DEBUG
 				debugpline("No more rects...");
 #endif
 				return FALSE;
@@ -1398,7 +1398,7 @@ schar ftyp, btyp;
 	if (xx <= 0 || yy <= 0 || tx <= 0 || ty <= 0 ||
 	    xx > COLNO-1 || tx > COLNO-1 ||
 	    yy > ROWNO-1 || ty > ROWNO-1) {
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		debugpline("dig_corridor: bad coords : (%d,%d) (%d,%d).",
 			   xx,yy,tx,ty);
 #endif

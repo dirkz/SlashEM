@@ -5,7 +5,7 @@
 #include "hack.h"
 /* #define DEBUG */	/* uncomment to enable code debugging */
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 # ifdef WIZARD
 #define debugpline	if (wizard) pline
 # else
@@ -721,7 +721,7 @@ makelevel()
 	/* make a secret treasure vault, not connected to the rest */
 	if(do_vault()) {
 		xchar w,h;
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		debugpline("trying to make a vault...");
 #endif
 		w = 1;
@@ -1664,7 +1664,7 @@ xchar x, y;
 	*source = u.uz;
 	insert_branch(br, TRUE);
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	pline("Made knox portal.");
 #endif
 	place_branch(br, x, y);

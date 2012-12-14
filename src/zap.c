@@ -1759,7 +1759,7 @@ struct obj *obj, *otmp;
 		if (flags.bypasses)
 			return 0;
 		else {
-#ifdef DEBUG
+#ifdef NH_DEBUG
 			pline("%s for a moment.", Tobjnam(obj, "pulsate"));
 #endif
 			obj->bypass = 0;

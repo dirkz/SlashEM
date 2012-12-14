@@ -420,12 +420,12 @@ unsigned int *stuckid, *steedid;	/* STEED */
 	/* this comes after inventory has been loaded */
 	for(otmp = invent; otmp; otmp = otmp->nobj)
 		if(otmp->owornmask)
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		{
 			pline ("obj(%s),", xname(otmp));
 #endif
 			setworn(otmp, otmp->owornmask);
-#ifdef DEBUG
+#ifdef NH_DEBUG
 		}
 #endif
 	/* reset weapon so that player will get a reminder about "bashing"

@@ -32,7 +32,7 @@ static dlb	*msg_file;
 /* used by ldrname() and neminame(), then copied into cvt_buf */
 static char	nambuf[sizeof cvt_buf];
 
-#ifdef DEBUG
+#ifdef NH_DEBUG
 static void NDECL(dump_qtlist);
 
 static void
@@ -128,7 +128,7 @@ load_qtlist()
 
 	if (!qt_list.common || !qt_list.chrole)
 	    impossible("load_qtlist: cannot load quest text.");
-#ifdef DEBUG
+#ifdef NH_DEBUG
 	dump_qtlist();
 #endif
 	return;	/* no ***DON'T*** close the msg_file */
