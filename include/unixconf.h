@@ -361,7 +361,9 @@
 #endif
 #define tgetch getchar
 
+#if !TARGET_OS_IPHONE
 #define SHELL		/* do not delete the '!' command */
+#endif
 
 /* -AJA- Escaping to a shell doesn't work when SDL port is running
  *       fullscreen (makes the computer seem frozen).  Undefining
