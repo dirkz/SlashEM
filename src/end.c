@@ -53,6 +53,12 @@ extern void FDECL(nethack_exit,(int));
 #define nethack_exit exit
 #endif
 
+# if TARGET_OS_IPHONE
+extern void ios_exit();
+#undef nethack_exit
+#define nethack_exit ios_exit
+#endif
+
 #define done_stopprint program_state.stopprint
 
 #ifdef AMIGA
@@ -67,6 +73,12 @@ extern void FDECL(nethack_exit,(int));
 # define NH_abort()	abort()
 #  endif
 # endif
+#endif
+
+# if TARGET_OS_IPHONE
+extern void ios_abort();
+#undef NH_abort
+#define NH_abort() (void) ios_abort()
 #endif
 
 /*
